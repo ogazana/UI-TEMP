@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0">
+      <title>Temperatur Conversion</title>
+      <link href="firstCSS.css" media="all  "rel="stylesheet" type="text/css" />
+      <script src="jquery.min.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link href="bootstrap.min.css" media="all  "rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">    	
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css">
+		.container {
+			margin-top: 40px;
+		}
+		.btn-primary {
+			width: 100%;
+		}
+	</style>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script> 
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <link rel="stylesheet" href="/resources/demos/style.css">
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   </head>
+   <body>
+      <div id="body">
+         <div id="header">
+           <div class="logo">Temperature Conversion</div>
+            <div class="nav">
+              <ul id="navMenu" class="nav-menu">
+               <a href="" class="menu_home menu"></a>
+               <a href="add-request.html" class="menu_news menu"></a>
+               </ul>
+               <span class="icon-span"><a href="javascript:void(0);" class="icon" onclick="myFunction()">
+             
+            </a></span>
+            </div>
+         </div>
+         <div id="content">
+            <div id="home" class="bg-light">
+            	<h2>Temperature Conversion</h2>
+            	<div>
+				  <p>* Kelvin to celsius</p>
+				  <p>* Pounds to kilograms</p>
+				  <p>* Miles to kilometers</p>
+				</div>
+               <div id="form">
+               	  <span class="form-field"><h4>Select Conversion Type</h4></span> 
+                  <div class="form-field"> 
+                  	<select name="unity" id="conversiontype" class="from">
+                  	<option value="0"></option>
+				    <option value="1">* Kelvin to celsius</option>
+				    <option value="2">* Pounds to kilograms</option>
+				    <option value="3">* Miles to kilometers</option>
+				    
+				  </select>
+				  </div>
+                  <div class="form-field"><input type="text" name="to" placeholder="Enter value to convert" class="to" id="valueToConvert"></div>
+                  <div class="form-field"><input type="button" name="submit" value="Convert" class="submit" id="convert"></div>
+
+                  <div class="form-field"><input type="text" readonly="true" name="to" placeholder="Converted Value" class="to" id="convertedValue"></div>
+               </div>
+               <div class="div1" id="div1ScrollorMobile">
+               </div>
+               <div class="div2" id ="div2ScrollorMobile">
+               </div>
+               <div class="search-info">
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
+<script src="firstScript.js"></script>
+
+	<script type='text/javascript'>
+		$( document ).ready(function() {
+           
+           if($("#conversiontype").val() !='' && $("#conversiontype").val()!=undefined){
+			$('#convert').click(function () {
+				if($("#valueToConvert").val() !='' && $("#valueToConvert").val()!=undefined){
+				var conversiontype = $("#conversiontype").val();
+				var valueToConvert = $("#valueToConvert").val();
+
+		  $.ajax({
+			type: "GET",
+			url: "http://localhost:8080/api/v1/temperature/"+conversiontype+"/convert?temp="+valueToConvert,
+			success: function(data){
+				$("#convertedValue").val(data)
+			},
+			failure: function(errMsg) {
+				alert(errMsg);
+			}
+		});
+		}
+			});
+
+          	$('#valueToConvert').mouseleave (function () {
+             
+             if(!$.isNumeric( $("#valueToConvert").val() )){
+
+             	$("#valueToConvert").val('');
+
+              }
+			});
+           
+          }
+		});
+
+
+	</script>
